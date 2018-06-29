@@ -1,0 +1,47 @@
+<form  [formGroup]="paymentForm" (ngSubmit)="onSubmit(paymentForm.value)">
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="BSB" formControlName="bSB">
+    <mat-error *ngIf="paymentForm.get('bSB')?.invalid">
+        <div *ngIf="paymentForm.get('bSB')?.errors.required">BSB is required</div>
+        <div *ngIf="paymentForm.get('bSB')?.errors.pattern">BSB must be 6 digit</div>
+      </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Account Number" formControlName="accountNumber">
+    <mat-error *ngIf="paymentForm.get('accountNumber')?.invalid">
+        <div *ngIf="paymentForm.get('accountNumber')?.errors.required">Account number is required</div>
+        <div *ngIf="paymentForm.get('accountNumber')?.errors.pattern">Account number must be 12 - 16 digits</div>
+      </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Account Name" formControlName="accountName">
+    <mat-error *ngIf="paymentForm.get('accountName')?.invalid">
+        <div *ngIf="paymentForm.get('accountName')?.errors.required">Account name is required</div>
+      </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Reference" formControlName="reference">
+    <mat-error *ngIf="paymentForm.get('reference')?.invalid">
+        <div *ngIf="paymentForm.get('reference')?.errors.required">Reference is required</div>
+        <div *ngIf="paymentForm.get('reference')?.errors.pattern">Reference must be 11 - 18 digits</div>
+      </mat-error>
+  </mat-form-field>
+
+  <mat-form-field class="full-width">
+    <input matInput placeholder="Payment Amount" formControlName="paymentAmount">
+    <mat-error *ngIf="paymentForm.get('paymentAmount')?.invalid">
+        <div *ngIf="paymentForm.get('paymentAmount')?.errors.required">Account number is required</div>
+        <div *ngIf="paymentForm.get('paymentAmount')?.errors.pattern">Account number must be a current number</div>
+      </mat-error>
+  </mat-form-field>
+
+  <button mat-button type="submit">
+    <mat-icon>save</mat-icon>Pay
+  </button>
+
+</form>
+
