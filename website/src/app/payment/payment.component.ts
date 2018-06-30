@@ -24,10 +24,10 @@ export class PaymentComponent implements OnInit {
     this.payment = new Payment('', '', '', '', 1000);
 
     this.paymentForm = this.fb.group({
-      bSB: ['', [Validators.required, Validators.pattern(/^[a-z]{10}$/)]],
-      accountNumber: ['', [Validators.required, Validators.pattern(/^[a-z]{12,16}$/)]],
+      bSB: ['', [Validators.required, Validators.pattern(/^[0-9]{6}$/)]],
+      accountNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{12,16}$/)]],
       accountName: ['', Validators.required],
-      reference: ['', [Validators.required, Validators.pattern(/^[a-z]{11,18}$/)]],
+      reference: ['', [Validators.required, Validators.pattern(/^[0-9]{11,18}$/)]],
       paymentAmount: ['', Validators.pattern(/^\$?\d+(,\d{3})*(\.\d*)?$/)]
     });
 
