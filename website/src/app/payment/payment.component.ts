@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Output } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Payment } from '../models/payment';
 import { PaymentService } from '../services/payment.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
+import { EventEmitter } from 'events';
 
 
 @Component({
@@ -16,6 +17,8 @@ export class PaymentComponent implements OnInit {
   paymentForm: FormGroup;
   payment: Payment;
   paymentRet: Observable<Payment>;
+
+  @Output() paymentSubmitted = new EventEmitter();
 
   constructor(private fb: FormBuilder, private paymentService: PaymentService, public snackBar: MatSnackBar) { }
 
@@ -53,6 +56,8 @@ export class PaymentComponent implements OnInit {
         this.snackBar.open(error.message, '', { duration: 3000 });
       }
     );
+
+    this.paymentSubmitted.emit(this.payment.accountName);
   }
 
 }
