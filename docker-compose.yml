@@ -5,10 +5,12 @@ services:
   website:
     image: website
     build:
-      context: .
-      dockerfile: website/Dockerfile
+      context: website
+      dockerfile: Dockerfile
     environment: 
       LOGURL: "logstash:5000"
+    ports:
+      - "80:80"
 
   elasticsearch:
     image: docker.elastic.co/elasticsearch/elasticsearch:6.3.0
