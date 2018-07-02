@@ -1,11 +1,9 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Payment } from '../models/payment';
 import { PaymentService } from '../services/payment.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
-import { EventEmitter } from 'events';
-
 
 @Component({
   selector: 'app-payment',
@@ -44,7 +42,7 @@ export class PaymentComponent implements OnInit {
   }
 
   onSubmit(fClient) {
-    this.paymentRet = this.paymentService.saveToServer(this.payment);
+    this.paymentRet = this.paymentService.saveToServer(fClient);
     this.paymentRet.subscribe(
       (data: Payment) => {
         // alert('Your payment is successful');
@@ -58,6 +56,8 @@ export class PaymentComponent implements OnInit {
     );
 
     this.paymentSubmitted.emit(this.payment.accountName);
+
+    return this.paymentRet;
   }
 
 }
