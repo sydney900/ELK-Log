@@ -34,8 +34,8 @@
   <mat-form-field class="full-width">
     <input matInput placeholder="Payment Amount" formControlName="paymentAmount">
     <mat-error *ngIf="paymentForm.get('paymentAmount')?.invalid">
-        <div *ngIf="paymentForm.get('paymentAmount')?.errors.required">Account number is required</div>
-        <div *ngIf="paymentForm.get('paymentAmount')?.errors.pattern">Account number must be a current number</div>
+        <div *ngIf="paymentForm.get('paymentAmount')?.errors.required">Payment amount is required</div>      
+        <div *ngIf="paymentForm.get('paymentAmount')?.errors.pattern">Payment amount must be a current number</div>
       </mat-error>
   </mat-form-field>
 

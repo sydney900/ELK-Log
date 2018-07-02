@@ -1,11 +1,9 @@
-import { Component, OnInit, Output } from '@angular/core';
+import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Payment } from '../models/payment';
 import { PaymentService } from '../services/payment.service';
 import { Observable } from 'rxjs';
 import { MatSnackBar } from '@angular/material';
-import { EventEmitter } from 'events';
-
 
 @Component({
   selector: 'app-payment',
@@ -31,7 +29,7 @@ export class PaymentComponent implements OnInit {
       accountNumber: ['', [Validators.required, Validators.pattern(/^[0-9]{12,16}$/)]],
       accountName: ['', Validators.required],
       reference: ['', [Validators.required, Validators.pattern(/^[0-9]{11,18}$/)]],
-      paymentAmount: ['', Validators.pattern(/^\$?\d+(,\d{3})*(\.\d*)?$/)]
+      paymentAmount: ['', [Validators.required, Validators.pattern(/^\$?\d+(,\d{3})*(\.\d*)?$/)]]
     });
 
     this.paymentForm.valueChanges.subscribe(f => {
@@ -44,20 +42,33 @@ export class PaymentComponent implements OnInit {
   }
 
   onSubmit(fClient) {
-    this.paymentRet = this.paymentService.saveToServer(this.payment);
+    this.paymentRet = this.paymentService.saveToServer(fClient);
     this.paymentRet.subscribe(
       (data: Payment) => {
         // alert('Your payment is successful');
-        this.snackBar.open('Your payment is successful', '', { duration: 3000 });
+        this.NotificatePaymentSuccess(data);
       },
       error => {
         console.log(error);
         // alert(error.message);
-        this.snackBar.open(error.message, '', { duration: 3000 });
+        this.NotifyPaymentError(error.message);
       }
     );
 
     this.paymentSubmitted.emit(this.payment.accountName);
+
+    return this.paymentRet;
   }
 
+
+  private NotifyPaymentError(error: string) {
+    this.snackBar.open(`Your payment is not successful becuase of ${error}`,
+      '', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center', panelClass: ['red-snackbar']
+    });
+  }
+
+  private NotificatePaymentSuccess(payment: Payment) {
+    const pay = JSON.stringify(payment);
+    this.snackBar.open(`Your payment ${pay} is successful`, '', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
+  }
 }
