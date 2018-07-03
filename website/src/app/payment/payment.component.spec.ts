@@ -52,6 +52,7 @@ describe('PaymentComponent', () => {
   it('should create a form with all controls', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
+<<<<<<< HEAD
 
       expect(component.paymentForm.get('bSB')).toBeTruthy();
       expect(component.paymentForm.contains('accountNumber')).toBe(true);
@@ -161,6 +162,57 @@ describe('PaymentComponent', () => {
     ShouldValidIfInputCorrectValue('paymentAmount', '123456789.567');
   });
 
+=======
+
+      expect(component.paymentForm.get('bSB')).toBeTruthy();
+      expect(component.paymentForm.contains('accountNumber')).toBe(true);
+      expect(component.paymentForm.contains('accountName')).toBeTruthy();
+      expect(component.paymentForm.contains('reference')).toBeTruthy();
+      expect(component.paymentForm.contains('paymentAmount')).toBeTruthy();
+    });
+  });
+
+  it('should make the BSB control required', () => {
+    fixture.whenStable().then(() => {
+      const ctl = component.paymentForm.get('bSB');
+
+      ctl.setValue('');
+
+      expect(ctl.valid).toBeFalsy();
+    });
+  });
+
+  it('should make the BSB control invalid if not input 6 digit', () => {
+    fixture.whenStable().then(() => {
+      const ctl = component.paymentForm.get('bSB');
+
+      ctl.setValue('123');
+      expect(ctl.valid).toBeFalsy();
+      expect(ctl.errors['pattern']).toBeTruthy();
+    });
+  });
+
+  it('should make the BSB control invalid if input no digit', () => {
+    fixture.whenStable().then(() => {
+      const ctl = component.paymentForm.get('bSB');
+
+      ctl.setValue('123abc');
+      expect(ctl.valid).toBeFalsy();
+      expect(ctl.errors['pattern']).toBeTruthy();
+    });
+  });
+
+  it('should make the BSB control valid if inputed 6 digit', () => {
+    fixture.whenStable().then(() => {
+      const ctl = component.paymentForm.get('bSB');
+
+      ctl.setValue('123456');
+      expect(ctl.valid).toBeTruthy();
+      expect(ctl.errors).toBeNull();
+    });
+  });
+
+>>>>>>> origin/master
   it('should have called payment service after onSubmit', () => {
     component.paymentSubmitted.subscribe(() => {
       expect(paymentServiceSpy.saveToServer).toHaveBeenCalledWith(mockPaymnet);
