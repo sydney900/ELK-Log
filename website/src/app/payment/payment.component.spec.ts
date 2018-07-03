@@ -52,7 +52,6 @@ describe('PaymentComponent', () => {
   it('should create a form with all controls', () => {
     fixture.whenStable().then(() => {
       fixture.detectChanges();
-<<<<<<< HEAD
 
       expect(component.paymentForm.get('bSB')).toBeTruthy();
       expect(component.paymentForm.contains('accountNumber')).toBe(true);
@@ -70,33 +69,39 @@ describe('PaymentComponent', () => {
     expect(ctl.errors[errorFieldName]).toBeTruthy();
   });
 
-  const ShouldInvalidIfNoEnoughInput = (controlName: string, givenValue: string, errorFieldName: string) => fixture.whenStable().then(() => {
-    const ctl = component.paymentForm.get(controlName);
-    ctl.setValue(givenValue);
-    fixture.detectChanges();
-    expect(ctl.valid).toBeFalsy();
-    expect(ctl.errors[errorFieldName]).toBeTruthy();
-  });
-
-  const ShouldInvalidIfNotInputCorrectPattern = (controlName: string, givenValue: string, errorFieldName: string) => fixture.whenStable().then(() => {
-    const ctl = component.paymentForm.get(controlName);
-    ctl.setValue(givenValue);
-    fixture.detectChanges();
+  const ShouldInvalidIfNoEnoughInput = (controlName: string, givenValue: string, errorFieldName: string) => {
     fixture.whenStable().then(() => {
+      const ctl = component.paymentForm.get(controlName);
+      ctl.setValue(givenValue);
+      fixture.detectChanges();
       expect(ctl.valid).toBeFalsy();
       expect(ctl.errors[errorFieldName]).toBeTruthy();
     });
-  });
+  };
 
-  const ShouldValidIfInputCorrectValue = (controlName: string, givenValue: string) => fixture.whenStable().then(() => {
-    const ctl = component.paymentForm.get(controlName);
-    ctl.setValue(givenValue);
-    fixture.detectChanges();
+  const ShouldInvalidIfNotInputCorrectPattern = (controlName: string, givenValue: string, errorFieldName: string) => {
     fixture.whenStable().then(() => {
-      expect(ctl.valid).toBeTruthy();
-      expect(ctl.errors).toBeNull();
+      const ctl = component.paymentForm.get(controlName);
+      ctl.setValue(givenValue);
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(ctl.valid).toBeFalsy();
+        expect(ctl.errors[errorFieldName]).toBeTruthy();
+      });
     });
-  });
+  };
+
+  const ShouldValidIfInputCorrectValue = (controlName: string, givenValue: string) => {
+    fixture.whenStable().then(() => {
+      const ctl = component.paymentForm.get(controlName);
+      ctl.setValue(givenValue);
+      fixture.detectChanges();
+      fixture.whenStable().then(() => {
+        expect(ctl.valid).toBeTruthy();
+        expect(ctl.errors).toBeNull();
+      });
+    });
+  };
 
   it('should make the BSB control required if nothing inputed', () => {
     ShouldRequiredIfNoInput('bSB', 'required');
@@ -162,57 +167,15 @@ describe('PaymentComponent', () => {
     ShouldValidIfInputCorrectValue('paymentAmount', '123456789.567');
   });
 
-=======
+  it('should raise paymentSubmitted after onSubmit', () => {
+    let accountName = null;
+    component.paymentSubmitted.subscribe( ac => accountName = ac);
 
-      expect(component.paymentForm.get('bSB')).toBeTruthy();
-      expect(component.paymentForm.contains('accountNumber')).toBe(true);
-      expect(component.paymentForm.contains('accountName')).toBeTruthy();
-      expect(component.paymentForm.contains('reference')).toBeTruthy();
-      expect(component.paymentForm.contains('paymentAmount')).toBeTruthy();
-    });
+    component.onSubmit(mockPaymnet);
+
+    expect(accountName).toEqual(mockPaymnet.accountName);
   });
 
-  it('should make the BSB control required', () => {
-    fixture.whenStable().then(() => {
-      const ctl = component.paymentForm.get('bSB');
-
-      ctl.setValue('');
-
-      expect(ctl.valid).toBeFalsy();
-    });
-  });
-
-  it('should make the BSB control invalid if not input 6 digit', () => {
-    fixture.whenStable().then(() => {
-      const ctl = component.paymentForm.get('bSB');
-
-      ctl.setValue('123');
-      expect(ctl.valid).toBeFalsy();
-      expect(ctl.errors['pattern']).toBeTruthy();
-    });
-  });
-
-  it('should make the BSB control invalid if input no digit', () => {
-    fixture.whenStable().then(() => {
-      const ctl = component.paymentForm.get('bSB');
-
-      ctl.setValue('123abc');
-      expect(ctl.valid).toBeFalsy();
-      expect(ctl.errors['pattern']).toBeTruthy();
-    });
-  });
-
-  it('should make the BSB control valid if inputed 6 digit', () => {
-    fixture.whenStable().then(() => {
-      const ctl = component.paymentForm.get('bSB');
-
-      ctl.setValue('123456');
-      expect(ctl.valid).toBeTruthy();
-      expect(ctl.errors).toBeNull();
-    });
-  });
-
->>>>>>> origin/master
   it('should have called payment service after onSubmit', () => {
     component.paymentSubmitted.subscribe(() => {
       expect(paymentServiceSpy.saveToServer).toHaveBeenCalledWith(mockPaymnet);
@@ -234,6 +197,5 @@ describe('PaymentComponent', () => {
         done();
       });
   });
-
 
 });

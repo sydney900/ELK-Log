@@ -45,26 +45,27 @@ export class PaymentComponent implements OnInit {
     this.paymentRet = this.paymentService.saveToServer(fClient);
     this.paymentRet.subscribe(
       (data: Payment) => {
-        // alert('Your payment is successful');
         this.NotificatePaymentSuccess(data);
       },
       error => {
         console.log(error);
-        // alert(error.message);
         this.NotifyPaymentError(error.message);
       }
     );
 
-    this.paymentSubmitted.emit(this.payment.accountName);
+    this.paymentSubmitted.emit(fClient.accountName);
 
     return this.paymentRet;
   }
 
-
   private NotifyPaymentError(error: string) {
     this.snackBar.open(`Your payment is not successful becuase of ${error}`,
-      '', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center', panelClass: ['red-snackbar']
-    });
+      '', {
+        duration: 3000,
+        verticalPosition: 'top',
+        horizontalPosition: 'center',
+        panelClass: ['red-snackbar']
+      });
   }
 
   private NotificatePaymentSuccess(payment: Payment) {
