@@ -23,7 +23,7 @@ sudo mkdir --parents /c
 sudo mount -t vboxsf c /c
 ```
 
-For permanent mounting, add last two lines at the end of profile
+For permanent mounting, add last two lines of command at the end of profile
 ```
 sudo vi /mnt/sda1/var/lib/boot2docker/profile
 ```
