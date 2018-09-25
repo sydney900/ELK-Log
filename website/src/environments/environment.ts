@@ -4,7 +4,7 @@
 
 export const environment = {
   production: false,
-  LOGURL: 'http://192.168.99.100:5000'
+  LOGURL: 'http://localhost:5000'
 };
 
 /*
