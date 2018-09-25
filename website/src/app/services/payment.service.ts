@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Payment } from '../models/payment';
-import { Observable } from 'rxjs';
+import { Observable, of, throwError } from 'rxjs';
 import { catchError } from 'rxjs/operators';
 import { LogService } from './log.service';
 
@@ -25,7 +25,7 @@ export class PaymentService {
 
           this.log.error(message);
 
-          throw error;
+          return throwError(error);
         }));
   }
 }
