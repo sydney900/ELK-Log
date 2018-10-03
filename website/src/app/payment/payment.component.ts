@@ -18,10 +18,10 @@ export class PaymentComponent implements OnInit {
 
   @Output() paymentSubmitted = new EventEmitter();
 
-  constructor(private fb: FormBuilder, private paymentService: PaymentService, private notification: NotificationService) { }
+  constructor(private fb: FormBuilder, private paymentService: PaymentService, private notification: NotificationService) { 
+  }
 
   ngOnInit() {
-
     this.payment = new Payment('', '', '', '', 1000);
 
     this.paymentForm = this.fb.group({

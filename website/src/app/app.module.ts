@@ -10,11 +10,13 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppErrorHandler } from './common/app-error-handler';
 import { HttpErrorInterceptor } from './common/http-error-interceptor';
+import { AboutComponent } from './about/about.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    PaymentComponent
+    PaymentComponent,
+    AboutComponent
   ],
   imports: [
     BrowserModule,
@@ -24,7 +26,8 @@ import { HttpErrorInterceptor } from './common/http-error-interceptor';
     MaterialModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: PaymentComponent }
+      { path: '', component: PaymentComponent },
+      { path: 'about', component: AboutComponent }
     ])
   ],
   providers: [
