@@ -3,7 +3,7 @@ import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Payment } from '../models/payment';
 import { PaymentService } from '../services/payment.service';
 import { Observable } from 'rxjs';
-import { MatSnackBar } from '@angular/material';
+import { NotificationService } from '../services/notification.service';
 
 @Component({
   selector: 'app-payment',
@@ -18,7 +18,7 @@ export class PaymentComponent implements OnInit {
 
   @Output() paymentSubmitted = new EventEmitter();
 
-  constructor(private fb: FormBuilder, private paymentService: PaymentService, public snackBar: MatSnackBar) { }
+  constructor(private fb: FormBuilder, private paymentService: PaymentService, private notification: NotificationService) { }
 
   ngOnInit() {
 
@@ -45,31 +45,17 @@ export class PaymentComponent implements OnInit {
     this.paymentRet = this.paymentService.saveToServer(fClient);
     this.paymentRet.subscribe(
       (data: Payment) => {
-        this.NotificatePaymentSuccess(data);
+        const pay = JSON.stringify(data);
+        this.notification.showSuccess(`Your payment ${pay} is successful`);
       },
       error => {
         console.log(error);
-        this.NotifyPaymentError(error.message);
+        this.notification.showError(error);
       }
     );
 
     this.paymentSubmitted.emit(fClient.accountName);
 
     return this.paymentRet;
-  }
-
-  private NotifyPaymentError(error: string) {
-    this.snackBar.open(`Your payment is not successful becuase of ${error}`,
-      '', {
-        duration: 3000,
-        verticalPosition: 'top',
-        horizontalPosition: 'center',
-        panelClass: ['red-snackbar']
-      });
-  }
-
-  private NotificatePaymentSuccess(payment: Payment) {
-    const pay = JSON.stringify(payment);
-    this.snackBar.open(`Your payment ${pay} is successful`, '', { duration: 3000, verticalPosition: 'top', horizontalPosition: 'center' });
   }
 }

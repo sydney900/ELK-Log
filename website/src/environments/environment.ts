@@ -4,7 +4,8 @@
 
 export const environment = {
   production: false,
-  LOGURL: 'http://localhost:5000'
+  LOGURL: 'http://localhost:5000',
+  PAYMENTURL: '/api/payment'
 };
 
 /*
