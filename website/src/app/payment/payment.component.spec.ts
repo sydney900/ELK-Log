@@ -15,6 +15,7 @@ describe('PaymentComponent', () => {
   let paymentServiceSpy;
   let snackBarSpy;
   const mockPaymnet: Payment = {
+    id: -1,
     bSB: '123456',
     accountNumber: '1234567890123456',
     accountName: 'Bing',

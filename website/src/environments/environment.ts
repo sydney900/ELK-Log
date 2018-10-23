@@ -5,7 +5,8 @@
 export const environment = {
   production: false,
   LOGURL: 'http://localhost:5000',
-  PAYMENTURL: '/api/payment'
+  PAYMENTURL: '/api/payment',
+  LOGIN_URL: 'api/authenticate'
 };
 
 /*

@@ -18,7 +18,7 @@ export class PaymentComponent implements OnInit {
 
   @Output() paymentSubmitted = new EventEmitter();
 
-  constructor(private fb: FormBuilder, private paymentService: PaymentService, private notification: NotificationService) { 
+  constructor(private fb: FormBuilder, private paymentService: PaymentService, private notification: NotificationService) {
   }
 
   ngOnInit() {
@@ -41,8 +41,8 @@ export class PaymentComponent implements OnInit {
     });
   }
 
-  onSubmit(fClient) {
-    this.paymentRet = this.paymentService.saveToServer(fClient);
+  onSubmit(payment) {
+    this.paymentRet = this.paymentService.saveToServer(payment);
     this.paymentRet.subscribe(
       (data: Payment) => {
         const pay = JSON.stringify(data);
@@ -54,7 +54,7 @@ export class PaymentComponent implements OnInit {
       }
     );
 
-    this.paymentSubmitted.emit(fClient.accountName);
+    this.paymentSubmitted.emit(payment.accountName);
 
     return this.paymentRet;
   }

@@ -11,12 +11,16 @@ import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AppErrorHandler } from './common/app-error-handler';
 import { HttpErrorInterceptor } from './common/http-error-interceptor';
 import { AboutComponent } from './about/about.component';
+import { LoginComponent } from './login/login.component';
+import { JwtInterceptor } from './common/jwt-interceptor';
+import { AuthGuard } from './services/auth-guard.service';
 
 @NgModule({
   declarations: [
     AppComponent,
     PaymentComponent,
-    AboutComponent
+    AboutComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -26,13 +30,15 @@ import { AboutComponent } from './about/about.component';
     MaterialModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: '', component: PaymentComponent },
+      { path: '', component: PaymentComponent, canActivate: [AuthGuard] },
+      { path: 'login', component: LoginComponent },
       { path: 'about', component: AboutComponent }
     ])
   ],
   providers: [
     { provide: ErrorHandler, useClass: AppErrorHandler },
-    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, }
+    { provide: HTTP_INTERCEPTORS, useClass: HttpErrorInterceptor, multi: true, },
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })
