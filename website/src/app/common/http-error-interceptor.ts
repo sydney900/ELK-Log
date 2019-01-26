@@ -48,7 +48,8 @@ export class HttpErrorInterceptor implements HttpInterceptor {
                         errMsg = getStatusText(statusCode);
                     }
 
-                    return throwError(errMsg);
+                    this.log.error(errMsg);
+                    return throwError(error);
                 })
             );
     }

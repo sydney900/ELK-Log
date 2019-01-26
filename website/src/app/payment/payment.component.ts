@@ -33,11 +33,7 @@ export class PaymentComponent implements OnInit {
     });
 
     this.paymentForm.valueChanges.subscribe(f => {
-      this.payment.bSB = f.bSB;
-      this.payment.accountNumber = f.accountNumber;
-      this.payment.accountName = f.accountName;
-      this.payment.reference = f.reference;
-      this.payment.paymentAmount = f.paymentAmount;
+      console.log(f);
     });
   }
 

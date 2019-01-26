@@ -7,7 +7,7 @@ import { LogService } from './log.service';
 @Injectable()
 export class DataService<T extends IResource> {
   private nameOfT: string;
-  constructor(private url: string, private httpClient: HttpClient, private log: LogService, t: (new () => T)) {
+  constructor(public url: string, private httpClient: HttpClient, private log: LogService, t: (new () => T)) {
     this.nameOfT = t.name;
   }
 
