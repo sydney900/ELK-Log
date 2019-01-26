@@ -1,4 +1,5 @@
 # Centralized log system for microservice by making use of ELK stack
+[![Build Status](https://dev.azure.com/wangbing1688/ELK-Log/_apis/build/status/sydney900.ELK-Log?branchName=master)](https://dev.azure.com/wangbing1688/ELK-Log/_build/latest?definitionId=3?branchName=master)
 
 In order to centralize the logs for microservice system and its web site, we can use ELK stack. 
 
